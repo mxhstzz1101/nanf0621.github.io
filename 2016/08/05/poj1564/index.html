@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="/img/icon2.png"/>
+        <link rel="alternate" type="application/rss+xml" title="nanf0621" href="/atom.xml">
+        <link rel="canonical" href="http://guolinn.com/">
+
+        <title>poj 1564 Sum It Up DFS | 一个博客。</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/"><img src="/img/icon2.png" alt="一个博客。" /></a>
+            <h1><a href="/">nanf0621</a></h1>
+            <p>忙碌着 无为着 继续着</p>
+            <h6><a href="/links">Links</a></h6>
+<h6><a href="/info">info</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+  
+  八月 5, 2016
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/poj/'>poj</a> 
+    
+      <a href='/tags/DFS/'>DFS</a> 
+    
+    </span>
+  
+
+  <h1 class="post-title">poj 1564 Sum It Up DFS</h1>
+  <section class="post-content article-entry">
+    <p>链接：<br><a href="http://poj.org/problem?id=1564" target="_blank" rel="external">Sum It Up</a></p>
+<p>题意：给出t ( 0 &lt; t &lt; 1000 )和n ( 0 &lt; n &lt; 13 )个数，n个数非递增输入。输出n个数有哪些不同的组合方法使得它们的和为n。</p>
+<p>思路：由于n最大只有12，所以可以直接使用dfs搜索方案。问题在于判重，每一层深搜进入下一层时，任意一个数字只需要搜索一次（第一次）。假设有k个相同数字，那么我们先选择使用第一个再向下搜索，接下来还有k-1个可以选择。如果不选择第1个而是选择第2个，那么接下来有k-2个数可以选择。如果在k-2个数中进行选择都可以出现可行解，那么在k-1个数中必然有相同的可行解。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">150</span>;</div><div class="line"><span class="keyword">int</span> t, n, ans[maxn], a[maxn], flag;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> pos, <span class="keyword">int</span> cnt, <span class="keyword">int</span> sum)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(sum == t)</div><div class="line">    &#123;</div><div class="line">        flag = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; cnt; ++i)</div><div class="line">            <span class="built_in">printf</span>(i==<span class="number">0</span>?<span class="string">"%d"</span>:<span class="string">"+%d"</span>, ans[i]);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = pos; i &lt; n; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>((i == pos || a[i] != a[i<span class="number">-1</span>]) &amp;&amp; sum+a[i] &lt;= t)</div><div class="line">        &#123;</div><div class="line">            ans[cnt] = a[i];</div><div class="line">            dfs(i+<span class="number">1</span>, cnt+<span class="number">1</span>, sum+a[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//freopen("in", "r", stdin); </span></div><div class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;t, &amp;n)&amp;&amp;t&amp;&amp;n) </div><div class="line">    &#123;</div><div class="line">        flag = <span class="number">1</span>;</div><div class="line">        <span class="built_in">memset</span>(ans, <span class="number">0</span>, <span class="keyword">sizeof</span>(ans));</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a[i]);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Sums of %d:\n"</span>, t);</div><div class="line">        dfs(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">        <span class="keyword">if</span>(flag) <span class="built_in">printf</span>(<span class="string">"NONE\n"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>nanf0621</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2016/08/05/poj1166/">
+        ← prev <!--poj 1166 The Clocks 枚举-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2016/08/05/poj1042/">
+        <!--poj 1042 Gone Fishing 枚举 贪心--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'guolinn'; // required: replace example with your shortname
+      var disqus_identifier = '';
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2016 nanf0621. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="https://guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','/js/ga.js','ga');
+            ga('create', '', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
+</html>
+
+
