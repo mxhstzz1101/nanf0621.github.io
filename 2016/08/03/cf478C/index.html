@@ -9,7 +9,7 @@
         <link rel="alternate" type="application/rss+xml" title="nanf0621" href="/atom.xml">
         <link rel="canonical" href="http://guolinn.com/">
 
-        <title>使用hexo和github pages建站总结  | 一个博客。</title>
+        <title>CodeForces 478C	Table Decorations 水题 | 一个博客。</title>
         <meta name="description" content="{{meta_description}}">
 
         <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
@@ -41,45 +41,21 @@
 
 <article class="post">
   
-  七月 19, 2016
+  八月 3, 2016
   
     <span class="taglist">  &middot; 
     
     
-      <a href='/tags/all-about-my-blog/'>all about my blog</a> 
-    
-      <a href='/tags/建站/'>建站</a> 
+      <a href='/tags/CodeForces/'>CodeForces</a> 
     
     </span>
   
 
-  <h1 class="post-title">使用hexo和github pages建站总结 </h1>
+  <h1 class="post-title">CodeForces 478C	Table Decorations 水题</h1>
   <section class="post-content article-entry">
-    <p>不给看<br><a id="more"></a><br>首先照着文档来吧~</p>
-<blockquote>
-<p>   hexo文档:<br>    <a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">https://hexo.io/zh-cn/docs/index.html</a></p>
-<p>   使用Github搭建静态博客（Hexo）:<br>    <a href="https://segmentfault.com/a/1190000000458953" target="_blank" rel="external">https://segmentfault.com/a/1190000000458953</a></p>
-</blockquote>
-<p>建站的时候遇到了一些问题，比如</p>
-<ol>
-<li>并不是直接在username.github.io文件夹里部署，应该新建一个文件夹，否则是无法push的。</li>
-<li>本地发布失败：后来发现是github仓库没删除干净，删掉所有东西就好了。</li>
-<li>后来还有每次重新发布，博客域名都会失效，因为每次上传都会覆盖仓库里的内容，在hexo文件夹里面加上CNAME文件就可以了。</li>
-</ol>
-<blockquote>
-<p>使用HEXO搭建github个人网站:<br>    <a href="http://www.cnblogs.com/lonelybonze/p/4980651.html" target="_blank" rel="external">http://www.cnblogs.com/lonelybonze/p/4980651.html</a></p>
-</blockquote>
-<p>主题更换</p>
-<blockquote>
-<p>   使用Hexo搭建博客（三），博客配置、主题和写作:<br>    <a href="http://www.jianshu.com/p/db7e64d86067" target="_blank" rel="external">http://www.jianshu.com/p/db7e64d86067</a></p>
-<p>   有哪些好看的 Hexo 主题？:<br>    <a href="https://www.zhihu.com/question/24422335" target="_blank" rel="external">https://www.zhihu.com/question/24422335</a></p>
-</blockquote>
-<p>另外还用到了一些东西~</p>
-<blockquote>
-<p>   七牛云:<br>    <a href="http://www.qiniu.com/" target="_blank" rel="external">http://www.qiniu.com/</a></p>
-<p>   Markdown 语法说明:<br>    <a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">http://wowubuntu.com/markdown/</a></p>
-</blockquote>
-
+    <p>链接：<br><a href="http://codeforces.com/problemset/problem/478/C" target="_blank" rel="external">Table Decorations</a></p>
+<p>题意：有三种颜色r,g,b的气球，每个桌子上放三个，这三个颜色不能完全相同，问最多能放多少个桌子。<br>思路：不能放完只有一种可能：某一个颜色的气球特别多。若r最多，并且r&gt;(g+b)*2，那么最多只能放2(g+b)，否则可以放到总数%3</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">long</span> <span class="keyword">long</span> a[<span class="number">3</span>];</div><div class="line">	<span class="built_in">scanf</span>(<span class="string">"%I64d%I64d%I64d"</span>, &amp;a[<span class="number">0</span>], &amp;a[<span class="number">1</span>] ,&amp;a[<span class="number">2</span>]);</div><div class="line">	sort(a, a+<span class="number">3</span>);</div><div class="line">	<span class="keyword">long</span> <span class="keyword">long</span> sum = a[<span class="number">0</span>] + a[<span class="number">1</span>] + a[<span class="number">2</span>];</div><div class="line">	<span class="keyword">if</span>(a[<span class="number">2</span>] &gt; (a[<span class="number">0</span>] + a[<span class="number">1</span>])*<span class="number">2</span>) sum = (a[<span class="number">0</span>] + a[<span class="number">1</span>])*<span class="number">3</span>;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%I64d\n"</span>, sum/<span class="number">3</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
   </section>
   <footer class="post-footer">
     <!--
@@ -93,11 +69,15 @@
 
 <nav class="pagination" role="pagination">
     
-    <a class="newer-posts" href="/2016/08/02/cf451B/">
-        ← prev <!--CodeForces 451B Sort the Array-->
+    <a class="newer-posts" href="/2016/08/04/cf500C/">
+        ← prev <!--CodeForces 500C New Year Book Reading-->
     </a>
     
     <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2016/08/03/cf460B/">
+        <!--CodeForces 460B Little Dima and Equation 枚举--> next →
+    </a>
     
 </nav>
 
