@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="/img/icon2.png"/>
+        <link rel="alternate" type="application/rss+xml" title="nanf0621" href="/atom.xml">
+        <link rel="canonical" href="http://guolinn.com/">
+
+        <title>HDU 5521 Meeting 最短路 dijkstra | 一个博客。</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/"><img src="/img/icon2.png" alt="一个博客。" /></a>
+            <h1><a href="/">nanf0621</a></h1>
+            <p>忙碌着 无为着 继续着</p>
+            <h6><a href="/links">Links</a></h6>
+<h6><a href="/info">info</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+  
+  十一月 7, 2016
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/HDU/'>HDU</a> 
+    
+      <a href='/tags/dijkstra/'>dijkstra</a> 
+    
+    </span>
+  
+
+  <h1 class="post-title">HDU 5521 Meeting 最短路 dijkstra</h1>
+  <section class="post-content article-entry">
+    <p>链接：<br><a href="http://acm.hdu.edu.cn/showproblem.php?pid=5521" target="_blank" rel="external">Meeting</a></p>
+<p>题意：有两头牛，一头住在第一个block，另一头住在第n个block，他们要见面。<br>有m个集合，每个集合有si个block，在同一个集合中的两个block之间传送花费时间为ti。<br>两头牛<strong>同时出发</strong>，问他们在哪些block见面，见面前花费的时间最短。</p>
+<p>思路：<br>可以以每个block为点，路径为边建一个图，然后分别从1和n开始走遍单源最短路，然后枚举中间节点找时间最短的。<br>（注意枚举的时候要从1到n！可能在1或者n见面呐。。<br>所有的si加起来最多是1e6，如果把每个集合中的所有点都与其他点都连一次，那么边数太多了，并且有重边，用邻接表会很麻烦。<br>于是想到建立一个中间节点，对于每一个集合，假设集合中的点都连接到一个中转点（cost是ti），那么集合中的点互相访问的时候经过该点就可以了，最后把花费的时间/2即可。<br>这样边数最多是2e6，节点数是n+m，可以用dijkstra求最短路<br>（代码如下。。写的特别挫，懒得改了、</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> maxv 2001000</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 1e18</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxs = <span class="number">1000100</span>;</div><div class="line"><span class="keyword">struct</span> edge &#123; ll to ,cost; &#125;;</div><div class="line"><span class="keyword">typedef</span> pair&lt;ll,ll&gt; P;</div><div class="line"><span class="keyword">int</span> V;</div><div class="line"><span class="built_in">vector</span>&lt;edge&gt; G[maxv];</div><div class="line">ll d[maxv][<span class="number">2</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dij</span><span class="params">(<span class="keyword">int</span> s, <span class="keyword">int</span> x)</span></span></div><div class="line">&#123;</div><div class="line">    priority_queue&lt;P,<span class="built_in">vector</span>&lt;P&gt;,greater&lt;P&gt; &gt;que;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= V; i++) d[i][x] = INF;</div><div class="line">    d[s][x]=<span class="number">0</span>;</div><div class="line">    que.push(P(<span class="number">0</span>,s));</div><div class="line"></div><div class="line">    <span class="keyword">while</span>(!que.empty())</div><div class="line">    &#123;</div><div class="line">        P p=que.top();</div><div class="line">        que.pop();</div><div class="line">        <span class="keyword">int</span> v=p.second;</div><div class="line">        <span class="keyword">if</span>(d[v][x]&lt;p.first) <span class="keyword">continue</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;G[v].size();i++)</div><div class="line">        &#123;</div><div class="line">            edge e=G[v][i];</div><div class="line">            <span class="keyword">if</span>(d[e.to][x]&gt;d[v][x]+e.cost)</div><div class="line">            &#123;</div><div class="line">                d[e.to][x]=d[v][x]+e.cost;</div><div class="line">                que.push(P(d[e.to][x],e.to));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> n,m;</div><div class="line"><span class="keyword">long</span> <span class="keyword">long</span> si,ti,x;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//freopen("in.txt", "r", stdin);</span></div><div class="line">    <span class="keyword">int</span> T,num;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;T);</div><div class="line">    <span class="keyword">for</span>(num=<span class="number">1</span>;num&lt;=T;num++)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">memset</span>(d, <span class="number">0</span>, <span class="keyword">sizeof</span>(d));</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; V; i++)</div><div class="line">            G[i].clear();</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;n,&amp;m);</div><div class="line">        V = n+m;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">scanf</span>(<span class="string">"%lld%lld"</span>, &amp;ti, &amp;si);</div><div class="line">            edge y;</div><div class="line">            y.cost = ti;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; si; j++)</div><div class="line">            &#123;</div><div class="line">                <span class="built_in">scanf</span>(<span class="string">"%lld"</span>, &amp;x);</div><div class="line">                y.to = n+i;</div><div class="line">                G[x].push_back(y);</div><div class="line">                y.to = x;</div><div class="line">                G[n+i].push_back(y);</div><div class="line">                <span class="comment">//getchar();</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        dij(<span class="number">1</span>,<span class="number">0</span>);</div><div class="line">        dij(n,<span class="number">1</span>);</div><div class="line">        ll mint = INF;</div><div class="line">        <span class="keyword">int</span> last;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(max(d[i][<span class="number">0</span>],d[i][<span class="number">1</span>]) &lt;= mint)</div><div class="line">            &#123;</div><div class="line">                mint = max(d[i][<span class="number">0</span>],d[i][<span class="number">1</span>]);</div><div class="line">                last = i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(mint == INF)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"Case #%d: Evil John\n"</span>, num);</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Case #%d: %lld\n"</span>, num, mint/<span class="number">2</span>);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; last; i++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(max(d[i][<span class="number">0</span>],d[i][<span class="number">1</span>]) == mint) <span class="built_in">printf</span>(<span class="string">"%d "</span>,i);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, last);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>nanf0621</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2016/11/07/hdoj5952/">
+        <!--HDU 5952 Counting Cliques DFS--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'guolinn'; // required: replace example with your shortname
+      var disqus_identifier = '';
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2016 nanf0621. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="https://guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','/js/ga.js','ga');
+            ga('create', '', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
+</html>
+
+
